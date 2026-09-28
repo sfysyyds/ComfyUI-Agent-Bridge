@@ -1,0 +1,1 @@
+# No extra dependencies. ComfyUI already provides aiohttp.

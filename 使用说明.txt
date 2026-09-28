@@ -1,0 +1,157 @@
+ComfyUI Agent Bridge 1.3.2 使用说明
+==================================
+
+一、这是什么
+------------
+
+本插件让支持本地 stdio MCP 的智能体读取、修改和运行“你当前正在查看的 ComfyUI 工作流”。
+
+它包含两个互补部分：
+
+1. comfyui-plugin：安装到 ComfyUI/custom_nodes，负责浏览器画布同步、命令执行、撤销记录和节点光效。
+2. comfyui-agent：安装到智能体一侧，包含 MCP 工具、Skill、安装/诊断/卸载脚本和 Codex 插件清单。
+
+MCP 提供真实工具，Skill 规定安全使用顺序，二者用途不同，所以都保留。
+
+
+二、主要特性
+------------
+
+· 新建空白 workflow tab 后，智能体会把它识别为当前工作流，并直接在这张空白画布上搭建。
+· 每张 ComfyUI 工作流使用原生 workflow UUID；命令执行前会再次核对，切错 tab 时拒绝修改。
+· 正在控制的节点显示与节点边界对齐的紫色流光和轻微自发光，任何有效高亮至少持续 1 秒。
+· 右下角是可折叠的小控制台：折叠时显示修改次数，展开可查看逐节点的修改记录并单独撤回。
+· 一批节点修改是一个 Ctrl+Z 撤销单元。
+· 修改会进入 ComfyUI 的未保存/已修改状态；桥接本身不调用保存接口，也不会主动覆盖磁盘工作流。
+· 如果你开启了 ComfyUI 自带的“自动保存”，ComfyUI 仍可能按自己的设置保存，这不属于桥接行为。
+· 节点和模型都从正在运行的 ComfyUI 动态发现，不维护容易过期的节点白名单。
+· 智能体可读取当前画布的原始工作流与视图信息、ComfyUI 设备/队列状态、近期任务的完整状态与执行错误，以及近期桥接命令错误。
+
+
+三、手动安装（Windows）
+----------------------
+
+1. 解压压缩包，不要只在压缩包预览窗口里运行脚本。
+2. 打开 PowerShell，执行：
+
+   powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\install.ps1" -ComfyUIRoot "你的ComfyUI目录"
+
+   “你的ComfyUI目录”可以是包含 main.py 的 ComfyUI 文件夹，也可以是它的上一层。
+
+3. 安装器会：
+
+   · 备份并安装 ComfyUI 自定义节点；
+   · 在 %LOCALAPPDATA%\ComfyUI-Agent-Bridge 创建独立 MCP Python 环境；
+   · 安装 comfyui-live-control Skill；
+   · 备份并更新 Codex 的 config.toml。
+
+4. 完全关闭并重启 ComfyUI 和智能体客户端。只刷新网页不够。
+5. 打开 ComfyUI，右下角应出现“Agent Bridge · r数字”。
+6. 运行诊断：
+
+   powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\diagnose.ps1" -ComfyUIRoot "你的ComfyUI目录"
+
+
+四、让智能体帮你安装
+--------------------
+
+把整个解压目录交给有本机文件和 PowerShell 权限的智能体，然后说：
+
+“阅读 AI安装说明.md，定位本机 ComfyUI，按说明安装并完成诊断。不要修改 ComfyUI 核心文件。”
+
+智能体专用步骤在 AI安装说明.md。
+
+
+五、日常使用
+------------
+
+确认 ComfyUI 网页已打开且 Agent Bridge 在线，然后可以直接说：
+
+“读取我当前正在看的 ComfyUI 工作流，说明模型、正负提示词、采样器和输出链路。”
+
+“我当前是新建的空白画布。不要新开工作流，直接在这里搭一套基础文生图工作流，并高亮新增节点。”
+
+“把当前采样器步数改为 24，其他设置不动。修改后让我能用一次 Ctrl+Z 撤销。”
+
+“查找名字包含 XXX 的 LoRA，检查当前模型架构和节点 schema，再插入现有 MODEL/CLIP 路径。”
+
+“写三组差异明显的提示词，每组设置后单独排队，记下真实 prompt_id 和输出文件。”
+
+“检查当前运行队列和最近的报错，告诉我是哪一个节点出错、原始错误信息是什么。”
+
+智能体应先读取 bridge_status 和 get_workflow_outline，再修改。空 outline 是合法空白画布，不代表需要加载另一张工作流。
+需要完整原始数据时可用 get_raw_workflow_session；要查历史报错用 get_recent_history（可分页），不要只凭概览猜原因。
+
+
+六、多个 ComfyUI 窗口或标签
+---------------------------
+
+浏览器顶层页面各有一个 session；ComfyUI 页面内部的每张 workflow tab 各有自己的 workflow UUID。
+
+如果多个浏览器页面同时在线，智能体会查看会话列表。无法判断时，请先点击目标 ComfyUI 页面，再告诉它“修改我刚刚聚焦的页面”。
+
+修改过程中若你切换了内部 workflow tab，命令会返回 workflow_changed；智能体应重新读取，不会把旧操作套到新画布。
+
+
+七、撤销、未保存和保存
+----------------------
+
+· apply_graph_operations 的一个批次对应一个 Ctrl+Z 单元。
+· 控制台的“撤回”只针对选中节点的那条 AI 修改记录；若该节点或相关连接之后又变化，会拒绝撤回以免覆盖新编辑。历史只保留在当前页面会话中，刷新后不会恢复。
+· 修改成功后，ComfyUI 自己的 ChangeTracker 会标记工作流已修改。
+· 插件没有“保存工作流”命令，不会直接写回原 JSON 文件。
+· 是否启用 ComfyUI 原生自动保存由你自己的 ComfyUI 设置决定。
+· 光效、聚焦和视口移动不写入工作流，也不产生保存内容。
+
+
+八、故障排查
+------------
+
+看不到 Agent Bridge：
+
+· 确认 custom_nodes\ComfyUI-Agent-Bridge\__init__.py 存在；
+· 完全重启 ComfyUI；
+· 浏览器 Ctrl+F5；
+· 查看 ComfyUI 启动日志是否有插件导入错误。
+
+智能体看不到当前画布：
+
+· 保持 ComfyUI 页面打开；
+· 等待右下角标签显示 revision；
+· 运行 diagnose.ps1，online_count 应至少为 1；
+· 多个页面在线时明确聚焦目标页。
+
+revision_conflict 或 workflow_changed：
+
+· 这是并发保护正常工作；
+· 让智能体重新读取当前 outline 和相关节点后再算一次修改。
+
+高亮不显示：
+
+· 强制刷新网页；
+· 确认浏览器加载的是 1.3.2 插件；
+· 调用 focus_nodes 或做一次安全的小修改测试。
+
+
+九、测试和卸载
+--------------
+
+离线测试：
+
+  powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\test.ps1"
+
+卸载（移除项先移动到可恢复备份）：
+
+  powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\uninstall.ps1" -ComfyUIRoot "你的ComfyUI目录"
+
+备份和运行数据默认位于：
+
+  %LOCALAPPDATA%\ComfyUI-Agent-Bridge
+
+
+十、安全
+--------
+
+默认只连接 http://127.0.0.1:8188。插件没有公网身份认证层，不要把 ComfyUI 控制端口直接暴露到公网。
+
+插件不执行任意浏览器 JavaScript、不下载模型、不安装第三方节点、不读取任意磁盘工作流。所有图修改都来自固定操作白名单。

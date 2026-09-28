@@ -1,0 +1,15 @@
+from . import bridge_routes  # noqa: F401
+from .bridge_state import PLUGIN_VERSION, PROTOCOL_VERSION
+
+
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
+WEB_DIRECTORY = "./web"
+
+__all__ = [
+    "NODE_CLASS_MAPPINGS",
+    "NODE_DISPLAY_NAME_MAPPINGS",
+    "WEB_DIRECTORY",
+    "PLUGIN_VERSION",
+    "PROTOCOL_VERSION",
+]

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ComfyUI Live Control"
+  short_description: "Edit the exact visible ComfyUI workflow"
+  default_prompt: "Use $comfyui-live-control to inspect and edit the ComfyUI workflow I am currently viewing."

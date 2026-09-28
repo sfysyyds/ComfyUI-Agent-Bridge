@@ -1,0 +1,23 @@
+{
+  "name": "comfyui-agent",
+  "version": "1.3.2",
+  "description": "Control the exact ComfyUI workflow visible in the browser through a local MCP bridge.",
+  "author": {
+    "name": "ComfyUI Agent Bridge contributors"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ComfyUI Agent Bridge",
+    "shortDescription": "Inspect and edit the live ComfyUI canvas.",
+    "longDescription": "Reads, edits, highlights, and runs the exact workflow currently visible in ComfyUI with revision and workflow identity checks.",
+    "developerName": "ComfyUI Agent Bridge contributors",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "defaultPrompt": [
+      "Inspect the ComfyUI workflow I am viewing.",
+      "Build a workflow on my current blank ComfyUI canvas.",
+      "Modify the selected ComfyUI nodes and highlight them."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

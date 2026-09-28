@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "comfyui_live": {
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${PLUGIN_ROOT}\\scripts\\run_mcp.ps1"
+      ],
+      "env": {
+        "COMFYUI_URL": "http://127.0.0.1:8188"
+      }
+    }
+  }
+}
