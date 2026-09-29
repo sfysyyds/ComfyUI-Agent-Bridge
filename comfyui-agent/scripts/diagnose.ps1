@@ -44,11 +44,14 @@ if (-not $comfyRootResolved) {
         }
     }
 }
-$pluginTarget = if ($comfyRootResolved) {
-    Join-Path $comfyRootResolved "custom_nodes\ComfyUI-Agent-Bridge"
-} else {
-    $null
-}
+$pluginCandidates = if ($comfyRootResolved) {
+    @("ComfyUI-Agent-Bridge", "agent-bridge") | ForEach-Object {
+        Join-Path $comfyRootResolved "custom_nodes\$_"
+    } | Where-Object {
+        Test-Path -LiteralPath (Join-Path $_ "bridge_state.py")
+    }
+} else { @() }
+$pluginTarget = @($pluginCandidates)[0]
 $requiredPluginFiles = @(
     "__init__.py",
     "bridge_routes.py",
@@ -74,10 +77,11 @@ if ($pluginTarget -and (Test-Path -LiteralPath (Join-Path $pluginTarget "bridge_
     }
 }
 $results.comfyui_plugin = @{
-    ok = [bool]($pluginTarget -and $missingPluginFiles.Count -eq 0)
+    ok = [bool]($pluginTarget -and @($pluginCandidates).Count -eq 1 -and $missingPluginFiles.Count -eq 0)
     path = $pluginTarget
     version = $installedPluginVersion
     missing_files = $missingPluginFiles
+    duplicate_paths = if (@($pluginCandidates).Count -gt 1) { @($pluginCandidates) } else { @() }
 }
 
 $venvPython = Join-Path $runtimeRoot ".venv\Scripts\python.exe"

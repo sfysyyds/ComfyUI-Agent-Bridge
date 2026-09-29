@@ -4,11 +4,11 @@
 
 ![ComfyUI Agent Bridge](assets/hero.svg)
 
-[下载 v1.3.2](https://github.com/sfysyyds/ComfyUI-Agent-Bridge/releases/tag/v1.3.2) · [安装](#安装) · [使用说明](使用说明.txt)
+[下载 v1.3.3](https://github.com/sfysyyds/ComfyUI-Agent-Bridge/releases/tag/v1.3.3) · [安装](#安装) · [使用说明](使用说明.txt)
 
 ## 安装
 
-目前提供经过验证的 Windows 安装流程。下载 [发布包](https://github.com/sfysyyds/ComfyUI-Agent-Bridge/releases/download/v1.3.2/ComfyUI-Agent-Bridge-1.3.2.zip) 并解压，在解压目录打开 PowerShell：
+目前提供经过验证的 Windows 安装流程。下载 [发布包](https://github.com/sfysyyds/ComfyUI-Agent-Bridge/releases/download/v1.3.3/ComfyUI-Agent-Bridge-1.3.3.zip) 并解压，在解压目录打开 PowerShell：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\install.ps1" -ComfyUIRoot "C:\你的ComfyUI目录"
@@ -21,6 +21,16 @@ powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\diagnose.ps1" 
 ```
 
 安装器会备份旧文件，不修改 ComfyUI 核心。其他支持本地 stdio MCP 的客户端见 [AI 安装说明](AI安装说明.md#非-codex-mcp-客户端)。
+
+如果已经通过 ComfyUI-Manager 安装了插件，只安装 MCP 与 Skill，避免出现两个插件副本：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\install.ps1" -ComfyUIRoot "C:\你的ComfyUI目录" -SkipPlugin
+```
+
+ComfyUI-Manager 只负责 ComfyUI 插件；MCP 和 Skill 仍需用上面的发布包安装。不要同时使用完整安装和 Manager 安装插件。
+
+Registry 发布用的独立插件源码在 [ComfyUI-Agent-Bridge-Plugin](https://github.com/sfysyyds/ComfyUI-Agent-Bridge-Plugin)。
 
 ## 使用
 

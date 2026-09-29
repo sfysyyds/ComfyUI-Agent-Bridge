@@ -5,7 +5,8 @@ param(
     [string]$ComfyUIUrl = "http://127.0.0.1:8188",
     [switch]$SkipMcpEnvironment,
     [switch]$SkipCodexConfig,
-    [switch]$SkipSkill
+    [switch]$SkipSkill,
+    [switch]$SkipPlugin
 )
 
 $ErrorActionPreference = "Stop"
@@ -17,7 +18,7 @@ $skillSource = Join-Path $agentRoot "skills\comfyui-live-control"
 $dataRoot = Join-Path ([Environment]::GetFolderPath("LocalApplicationData")) "ComfyUI-Agent-Bridge"
 $runtimeRoot = Join-Path $dataRoot "runtime"
 $backupRoot = Join-Path $dataRoot "backups"
-$bridgeVersion = "1.3.2"
+$bridgeVersion = "1.3.3"
 
 function Resolve-ComfyRoot {
     param([string]$Candidate)
@@ -99,6 +100,7 @@ if (-not (Test-Path -LiteralPath $customNodesRoot)) {
 $pluginTarget = Join-Path $customNodesRoot "ComfyUI-Agent-Bridge"
 Assert-ExactChild -Parent $customNodesRoot -Child $pluginTarget
 $installStamp = New-UniqueStamp
+if (-not $SkipPlugin) {
 $pluginStage = Join-Path $customNodesRoot ".ComfyUI-Agent-Bridge-stage-$installStamp"
 $pluginBackup = Join-Path $backupRoot "ComfyUI-Agent-Bridge-$installStamp"
 Assert-ExactChild -Parent $customNodesRoot -Child $pluginStage
@@ -140,6 +142,9 @@ if ($oldPluginMoved) {
     Write-Host "Existing ComfyUI plugin moved to: $pluginBackup"
 }
 Write-Host "Installed ComfyUI plugin: $pluginTarget"
+} else {
+    Write-Host "Skipped ComfyUI plugin; keep the Registry installation."
+}
 
 $venvPython = Join-Path $runtimeRoot ".venv\Scripts\python.exe"
 $mcpInstallSource = $null
@@ -256,7 +261,8 @@ $installState = [ordered]@{
     installed_at = (Get-Date).ToString("o")
     distribution_root = $distributionRoot
     comfyui_root = $comfyRootResolved
-    plugin_target = $pluginTarget
+    plugin_target = if ($SkipPlugin) { $null } else { $pluginTarget }
+    plugin_install_skipped = [bool]$SkipPlugin
     mcp_python = $venvPython
     mcp_install_source = $mcpInstallSource
     comfyui_url = $ComfyUIUrl.TrimEnd("/")

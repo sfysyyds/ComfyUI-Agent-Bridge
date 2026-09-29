@@ -34,7 +34,7 @@ class DistributionTests(unittest.TestCase):
             manifest["version"],
             match.group(1),
         }
-        self.assertEqual(versions, {"1.3.2"})
+        self.assertEqual(versions, {"1.3.3"})
 
     def test_required_frontend_modules_exist(self):
         for name in (

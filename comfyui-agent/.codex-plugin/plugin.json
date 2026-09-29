@@ -1,6 +1,6 @@
 {
   "name": "comfyui-agent",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Control the exact ComfyUI workflow visible in the browser through a local MCP bridge.",
   "author": {
     "name": "ComfyUI Agent Bridge contributors"

@@ -1,4 +1,4 @@
-# ComfyUI Agent Bridge 1.3.2 — AI 安装说明
+# ComfyUI Agent Bridge 1.3.3 — AI 安装说明
 
 本文给能够操作本机文件和 PowerShell 的智能体使用。目标是安装分发包，不修改 ComfyUI 核心。
 
@@ -36,6 +36,8 @@ MCP 和 Skill 互补：MCP 提供实时工具，Skill 约束正确的读取、sc
 powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\install.ps1" `
   -ComfyUIRoot "C:\实际路径\ComfyUI"
 ```
+
+若 ComfyUI 插件已由 ComfyUI-Manager 安装，改加 `-SkipPlugin`，仅安装 MCP、Skill 与客户端配置。不要在 `custom_nodes` 中保留 `agent-bridge` 和 `ComfyUI-Agent-Bridge` 两个插件副本；诊断会把重复安装判为失败。
 
 非默认端口：
 
@@ -106,7 +108,7 @@ powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\diagnose.ps1" 
 - `codex.mcp_configured = true`（Codex 安装）
 - `codex.skill_installed = true`（Codex 安装）
 - `live_bridge.ok = true`
-- `live_bridge.plugin_version = 1.3.2`
+- `live_bridge.plugin_version = 1.3.3`
 - `live_bridge.online_count >= 1`
 - 活动 session 含非空 `workflow_id`
 

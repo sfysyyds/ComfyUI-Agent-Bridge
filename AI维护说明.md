@@ -1,4 +1,4 @@
-# ComfyUI Agent Bridge 1.3.2 — AI 维护说明
+# ComfyUI Agent Bridge 1.3.3 — AI 维护说明
 
 本文是项目的完整技术入口。未来 ComfyUI、前端、MCP SDK 或智能体客户端更新后，维护者应先读完本文，再修改代码。
 
@@ -20,6 +20,8 @@
 10. MCP stdout 只用于协议；日志不得污染 stdout。
 
 ## 2. 分发结构
+
+Registry 仓库 [ComfyUI-Agent-Bridge-Plugin](https://github.com/sfysyyds/ComfyUI-Agent-Bridge-Plugin) 只镜像 `comfyui-plugin/`；Registry 不分发 MCP 和 Skill。更新时先核对两处插件文件一致，再分别发布完整 ZIP 和 Registry 版本。用户通过 Manager 安装插件后，应从完整 ZIP 运行 `install.ps1 -SkipPlugin`，避免重复插件。
 
 顶层固定只有两个文件夹和三份说明：
 
@@ -192,7 +194,7 @@ app.canvas.emitAfterChange()
 ## 7. HTTP 和 WebSocket 协议
 
 协议版本：`comfy-agent-bridge/v1`  
-插件版本：`1.3.2`  
+插件版本：`1.3.3`
 HTTP 前缀：`/comfy-agent-bridge/v1`
 
 路由：

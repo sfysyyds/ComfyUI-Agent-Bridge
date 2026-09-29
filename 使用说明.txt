@@ -1,4 +1,4 @@
-ComfyUI Agent Bridge 1.3.2 使用说明
+ComfyUI Agent Bridge 1.3.3 使用说明
 ==================================
 
 一、这是什么
@@ -37,6 +37,8 @@ MCP 提供真实工具，Skill 规定安全使用顺序，二者用途不同，�
    powershell -ExecutionPolicy Bypass -File ".\comfyui-agent\scripts\install.ps1" -ComfyUIRoot "你的ComfyUI目录"
 
    “你的ComfyUI目录”可以是包含 main.py 的 ComfyUI 文件夹，也可以是它的上一层。
+
+   如果插件已由 ComfyUI-Manager 安装，在命令末尾加 -SkipPlugin，只安装 MCP 与 Skill。
 
 3. 安装器会：
 
@@ -129,7 +131,7 @@ revision_conflict 或 workflow_changed：
 高亮不显示：
 
 · 强制刷新网页；
-· 确认浏览器加载的是 1.3.2 插件；
+· 确认浏览器加载的是 1.3.3 插件；
 · 调用 focus_nodes 或做一次安全的小修改测试。
 
 
