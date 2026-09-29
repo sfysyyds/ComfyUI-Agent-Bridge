@@ -1,41 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
   <title id="title">ComfyUI Agent Bridge</title>
-  <desc id="desc">A purple-lit workflow node connected to a compact AI history console.</desc>
+  <desc id="desc">A ComfyUI workflow node connected to the bridge.</desc>
   <defs>
-    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#10091f"/><stop offset="1" stop-color="#211039"/></linearGradient>
-    <linearGradient id="violet" x2="1" y2="1"><stop stop-color="#a855f7"/><stop offset=".5" stop-color="#e879f9"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
-    <radialGradient id="halo"><stop stop-color="#7c3aed" stop-opacity=".34"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#aa80e4" stroke-opacity=".09"/></pattern>
-    <filter id="glow"><feGaussianBlur stdDeviation="10"/></filter>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#111827"/><stop offset="1" stop-color="#201331"/></linearGradient>
+    <linearGradient id="edge" x2="1"><stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#c084fc"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="8"/></filter>
   </defs>
-  <rect width="1200" height="420" rx="24" fill="url(#bg)"/>
-  <rect width="1200" height="420" rx="24" fill="url(#grid)"/>
-  <circle cx="875" cy="194" r="320" fill="url(#halo)"/>
-  <path d="M0 337Q303 276 576 391" fill="none" stroke="#a855f7" stroke-opacity=".18" stroke-width="2"/>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="58" y="55" width="205" height="29" rx="14.5" fill="#7c3aed" fill-opacity=".2" stroke="#a855f7" stroke-opacity=".5"/>
-    <text x="76" y="75" fill="#d8b4fe" font-size="12" font-weight="700" letter-spacing="2">LIVE CANVAS  ·  MCP  ·  SKILL</text>
-    <text x="56" y="166" fill="#f5f3ff" font-size="64" font-weight="800">ComfyUI</text>
-    <text x="56" y="239" fill="url(#violet)" font-size="64" font-weight="800">Agent Bridge</text>
-    <text x="60" y="294" fill="#d4c6e9" font-size="23">让 AI 看见并安全操控当前工作流</text>
-    <text x="60" y="330" fill="#9f91b4" font-size="16">Read live state. Understand any node. Edit with confidence.</text>
-    <text x="60" y="376" fill="#c4b5fd" font-size="14" font-weight="700">v1.3.2  ·  Windows  ·  Local-first</text>
+  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
+  <path d="M60 236h440" stroke="#a78bfa" stroke-opacity=".55" stroke-width="2"/>
+  <g font-family="Arial, sans-serif">
+    <text x="60" y="125" fill="#f5f3ff" font-size="57" font-weight="700">ComfyUI</text>
+    <text x="60" y="195" fill="#c4b5fd" font-size="57" font-weight="700">Agent Bridge</text>
+    <text x="60" y="269" fill="#a9a1b9" font-size="17">Current canvas · Local MCP</text>
   </g>
-  <path d="M708 197C650 197 650 275 593 275" fill="none" stroke="#c084fc" stroke-opacity=".5" stroke-width="3"/>
-  <path d="M1049 197C1100 197 1095 307 1038 307" fill="none" stroke="#c084fc" stroke-opacity=".4" stroke-width="3"/>
-  <rect x="714" y="104" width="344" height="188" rx="18" fill="#a855f7" fill-opacity=".7" filter="url(#glow)"/>
-  <rect x="714" y="104" width="344" height="188" rx="18" fill="#21142f" stroke="url(#violet)" stroke-width="2.5"/>
-  <path d="M714 154h344" stroke="#a855f7" stroke-opacity=".4"/>
-  <circle cx="746" cy="129" r="7" fill="#c084fc"/>
-  <text x="765" y="136" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="700">KSampler</text>
-  <g font-family="Segoe UI, Arial, sans-serif" font-size="14">
-    <text x="742" y="190" fill="#a99bbd">steps</text><text x="1018" y="190" text-anchor="end" fill="#e9d5ff">24</text>
-    <text x="742" y="221" fill="#a99bbd">cfg</text><text x="1018" y="221" text-anchor="end" fill="#e9d5ff">7.0</text>
-    <text x="742" y="252" fill="#a99bbd">sampler_name</text><text x="1018" y="252" text-anchor="end" fill="#e9d5ff">euler</text>
+  <path d="M670 150h114" fill="none" stroke="#a78bfa" stroke-width="3"/>
+  <circle cx="670" cy="150" r="7" fill="#a78bfa"/>
+  <circle cx="784" cy="150" r="7" fill="#a78bfa"/>
+  <rect x="784" y="55" width="345" height="190" rx="15" fill="#8b5cf6" fill-opacity=".45" filter="url(#glow)"/>
+  <rect x="784" y="55" width="345" height="190" rx="15" fill="#1e1930" stroke="url(#edge)" stroke-width="2"/>
+  <path d="M784 105h345" stroke="#665581"/>
+  <g font-family="Arial, sans-serif">
+    <text x="810" y="88" fill="#f5f3ff" font-size="21" font-weight="700">KSampler</text>
+    <text x="810" y="145" fill="#aaa1bd" font-size="16">steps</text>
+    <text x="1101" y="145" fill="#e9d5ff" font-size="16" text-anchor="end">24</text>
+    <text x="810" y="181" fill="#aaa1bd" font-size="16">cfg</text>
+    <text x="1101" y="181" fill="#e9d5ff" font-size="16" text-anchor="end">7.0</text>
+    <text x="810" y="217" fill="#aaa1bd" font-size="16">sampler_name</text>
+    <text x="1101" y="217" fill="#e9d5ff" font-size="16" text-anchor="end">euler</text>
   </g>
-  <circle cx="714" cy="197" r="7" fill="#a855f7"/><circle cx="1058" cy="197" r="7" fill="#a855f7"/>
-  <rect x="797" y="313" width="250" height="59" rx="14" fill="#1c122a" stroke="#a855f7" stroke-opacity=".7"/>
-  <text x="817" y="349" fill="#c4b5fd" font-family="Segoe UI, Arial, sans-serif" font-size="15">⋮⋮</text>
-  <circle cx="857" cy="343" r="5" fill="#22c55e"/>
-  <text x="870" y="349" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="14">修改历史 · 可拖动</text>
 </svg>
